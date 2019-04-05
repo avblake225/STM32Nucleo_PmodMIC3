@@ -1,0 +1,20 @@
+--cpu=Cortex-M4.fp
+"stm32f413zh_nucleo\system_stm32f4xx.o"
+"stm32f413zh_nucleo\stm32f4xx_nucleo_144.o"
+"stm32f413zh_nucleo\main.o"
+"stm32f413zh_nucleo\stm32f4xx_hal_msp.o"
+"stm32f413zh_nucleo\stm32f4xx_it.o"
+"stm32f413zh_nucleo\startup_stm32f413xx.o"
+"stm32f413zh_nucleo\stm32f4xx_hal_dma.o"
+"stm32f413zh_nucleo\stm32f4xx_hal.o"
+"stm32f413zh_nucleo\stm32f4xx_hal_rcc_ex.o"
+"stm32f413zh_nucleo\stm32f4xx_hal_rcc.o"
+"stm32f413zh_nucleo\stm32f4xx_hal_spi.o"
+"stm32f413zh_nucleo\stm32f4xx_hal_cortex.o"
+"stm32f413zh_nucleo\stm32f4xx_hal_gpio.o"
+"stm32f413zh_nucleo\stm32f4xx_hal_pwr_ex.o"
+"stm32f413zh_nucleo\stm32f4xx_hal_i2c.o"
+--library_type=microlib --strict --scatter "STM32F413ZH_Nucleo\STM32F413ZH_Nucleo.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "STM32F413ZH_Nucleo.map" -o STM32F413ZH_Nucleo\STM32F413ZH_Nucleo.axf
