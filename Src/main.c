@@ -51,11 +51,15 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Uncomment this line to use the board as master, if not it is used as slave */
-//#define MASTER_BOARD
+#define MASTER_BOARD
 
 /* Private variables ---------------------------------------------------------*/
 /* SPI handler declaration */
 SPI_HandleTypeDef SpiHandle;
+HAL_StatusTypeDef status;
+
+/* USART handler declaration */
+USART_HandleTypeDef UsartHandle;
 
 /* Buffer used for transmission */
 uint8_t aTxBuffer[] = "****SPI - Two Boards communication based on Polling **** SPI Message ******** SPI Message ******** SPI Message ****";
@@ -124,6 +128,21 @@ int main(void)
     /* Initialization Error */
     Error_Handler();
   }
+	
+	/*##-- Configure the USART peripheral #######################################*/
+  /* Set the USART parameters */
+	UsartHandle.Instance = USARTx;
+	UsartHandle.Init.BaudRate = 115200;
+	UsartHandle.Init.WordLength = USART_WORDLENGTH_8B;
+	UsartHandle.Init.StopBits = USART_STOPBITS_1;
+	UsartHandle.Init.Parity = USART_PARITY_ODD;
+	UsartHandle.Init.Mode = USART_MODE_TX_RX;
+	
+	if(HAL_USART_Init(&UsartHandle) != HAL_OK)
+  {
+    /* Initialization Error */
+    Error_Handler();
+  }
 
 #ifdef MASTER_BOARD
 
@@ -142,41 +161,44 @@ int main(void)
   /*##-2- Start the Full Duplex Communication process ########################*/  
   /* While the SPI in TransmitReceive process, user can transmit data through 
      "aTxBuffer" buffer & receive data through "aRxBuffer" */
-  /* Timeout is set to 5S */
-  
-  switch(HAL_SPI_TransmitReceive(&SpiHandle, (uint8_t*)aTxBuffer, (uint8_t *)aRxBuffer, BUFFERSIZE, 5000))
-  {
-    case HAL_OK:
-      /* Communication is completed ___________________________________________ */
-      /* Compare the sent and received buffers */
-      if (Buffercmp((uint8_t *)aTxBuffer, (uint8_t *)aRxBuffer, BUFFERSIZE))
-      {
-        /* Transfer error in transmission process */
-        Error_Handler();
-      }
-      /* Turn LED1 on: Transfer in transmission process is correct */
-      BSP_LED_On(LED1);
-      /* Turn LED2 on: Transfer in reception process is correct */
-      BSP_LED_On(LED2);
-      break;
+  /* Timeout is set to 5S */  	
+	
+//  switch(HAL_SPI_TransmitReceive(&SpiHandle, (uint8_t*)aTxBuffer, (uint8_t *)aRxBuffer, BUFFERSIZE, 5000))	  
+//    {
+//      case HAL_OK:
+//      /* Communication is completed ___________________________________________ */
+//      /* Compare the sent and received buffers */
+//      if (Buffercmp((uint8_t *)aTxBuffer, (uint8_t *)aRxBuffer, BUFFERSIZE))
+//      {
+//        /* Transfer error in transmission process */
+//        Error_Handler();
+//      }
+//        /* Turn LED1 on: Transfer in transmission process is correct */
+//        BSP_LED_On(LED1);
+//        /* Turn LED2 on: Transfer in reception process is correct */
+//        BSP_LED_On(LED2);
+//        break;
 
-    case HAL_TIMEOUT:
-      /* A Timeout Occur ______________________________________________________*/
-      /* Call Timeout Handler */
-      Timeout_Error_Handler();
-      break;
-      /* An Error Occur ______________________________________________________ */
-    case HAL_ERROR:
-      /* Call Timeout Handler */
-      Error_Handler();
-      break;
-    default:
-      break;
-  }
+//      case HAL_TIMEOUT:
+//      /* A Timeout Occur ______________________________________________________*/
+//      /* Call Timeout Handler */
+//        Timeout_Error_Handler();
+//        break;
+//      /* An Error Occur ______________________________________________________ */
+//      case HAL_ERROR:
+//      /* Call Timeout Handler */
+//        Error_Handler();
+//        break;
+//      default:
+//        break;  
+//     }
 
   /* Infinite loop */
   while (1)
   {
+		status = HAL_SPI_Receive(&SpiHandle, (uint8_t *)aRxBuffer, BUFFERSIZE, 5000);	
+
+    HAL_Delay(1000);		
   }
 }
 

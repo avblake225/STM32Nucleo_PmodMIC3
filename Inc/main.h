@@ -65,6 +65,18 @@
 #define SPIx_MOSI_GPIO_PORT              GPIOA
 #define SPIx_MOSI_AF                     GPIO_AF5_SPI1
 
+/* Definition for USARTx clock resources */
+#define USARTx													 USART2
+#define USARTx_CLK_ENABLE()							 __HAL_RCC_USART2_CLK_ENABLE()
+#define USARTx_TX_GPIO_CLK_ENABLE()			 __HAL_RCC_GPIOD_CLK_ENABLE()
+#define USARTx_RX_GPIO_CLK_ENABLE()			 __HAL_RCC_GPIOD_CLK_ENABLE()
+
+/* Definition for USARTx Pins */
+#define USARTx_TX_PIN										 GPIO_PIN_5
+#define USARTx_TX_GPIO_PORT							 GPIOD
+#define USARTx_RX_PIN										 GPIO_PIN_6
+#define USARTx_RX_GPIO_PORT							 GPIOD
+
 /* Size of buffer */
 #define BUFFERSIZE                       (COUNTOF(aTxBuffer) - 1)
 

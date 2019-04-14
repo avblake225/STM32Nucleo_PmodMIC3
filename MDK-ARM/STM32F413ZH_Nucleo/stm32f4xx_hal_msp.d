@@ -29,3 +29,4 @@ stm32f413zh_nucleo\stm32f4xx_hal_msp.o: ../../../../../../Drivers/STM32F4xx_HAL_
 stm32f413zh_nucleo\stm32f4xx_hal_msp.o: ../../../../../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 stm32f413zh_nucleo\stm32f4xx_hal_msp.o: ../../../../../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 stm32f413zh_nucleo\stm32f4xx_hal_msp.o: ../../../../../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
+stm32f413zh_nucleo\stm32f4xx_hal_msp.o: ../../../../../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_usart.h
