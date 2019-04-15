@@ -52,6 +52,7 @@
 /* Private macro -------------------------------------------------------------*/
 /* Uncomment this line to use the board as master, if not it is used as slave */
 #define MASTER_BOARD
+#define MIC_TEST
 
 /* Private variables ---------------------------------------------------------*/
 /* SPI handler declaration */
@@ -163,42 +164,46 @@ int main(void)
      "aTxBuffer" buffer & receive data through "aRxBuffer" */
   /* Timeout is set to 5S */  	
 	
-//  switch(HAL_SPI_TransmitReceive(&SpiHandle, (uint8_t*)aTxBuffer, (uint8_t *)aRxBuffer, BUFFERSIZE, 5000))	  
-//    {
-//      case HAL_OK:
-//      /* Communication is completed ___________________________________________ */
-//      /* Compare the sent and received buffers */
-//      if (Buffercmp((uint8_t *)aTxBuffer, (uint8_t *)aRxBuffer, BUFFERSIZE))
-//      {
-//        /* Transfer error in transmission process */
-//        Error_Handler();
-//      }
-//        /* Turn LED1 on: Transfer in transmission process is correct */
-//        BSP_LED_On(LED1);
-//        /* Turn LED2 on: Transfer in reception process is correct */
-//        BSP_LED_On(LED2);
-//        break;
+#ifdef SPI_TEST	
+  switch(HAL_SPI_TransmitReceive(&SpiHandle, (uint8_t*)aTxBuffer, (uint8_t *)aRxBuffer, BUFFERSIZE, 5000))	  
+    {
+      case HAL_OK:
+      /* Communication is completed ___________________________________________ */
+      /* Compare the sent and received buffers */
+      if (Buffercmp((uint8_t *)aTxBuffer, (uint8_t *)aRxBuffer, BUFFERSIZE))
+      {
+        /* Transfer error in transmission process */
+        Error_Handler();
+      }
+        /* Turn LED1 on: Transfer in transmission process is correct */
+        BSP_LED_On(LED1);
+        /* Turn LED2 on: Transfer in reception process is correct */
+        BSP_LED_On(LED2);
+        break;
 
-//      case HAL_TIMEOUT:
-//      /* A Timeout Occur ______________________________________________________*/
-//      /* Call Timeout Handler */
-//        Timeout_Error_Handler();
-//        break;
-//      /* An Error Occur ______________________________________________________ */
-//      case HAL_ERROR:
-//      /* Call Timeout Handler */
-//        Error_Handler();
-//        break;
-//      default:
-//        break;  
-//     }
-
+      case HAL_TIMEOUT:
+      /* A Timeout Occur ______________________________________________________*/
+      /* Call Timeout Handler */
+        Timeout_Error_Handler();
+        break;
+      /* An Error Occur ______________________________________________________ */
+      case HAL_ERROR:
+      /* Call Timeout Handler */
+        Error_Handler();
+        break;
+      default:
+        break;  
+     }
+#endif
+		 
   /* Infinite loop */
   while (1)
   {
-		status = HAL_SPI_Receive(&SpiHandle, (uint8_t *)aRxBuffer, BUFFERSIZE, 5000);	
+		#ifdef MIC_TEST
+		   status = HAL_SPI_Receive(&SpiHandle, (uint8_t *)aRxBuffer, BUFFERSIZE, 5000);	
 
-    HAL_Delay(1000);		
+       HAL_Delay(1000);
+    #endif						
   }
 }
 
