@@ -71,13 +71,21 @@ GPIO_InitTypeDef  GPIO_InitStruct;
   {     
     /*##-1- Enable peripherals and GPIO Clocks #################################*/
     /* Enable GPIO TX/RX clock */
+		SPIx_CS_GPIO_CLK_ENABLE();
     SPIx_SCK_GPIO_CLK_ENABLE();
     SPIx_MISO_GPIO_CLK_ENABLE();
     SPIx_MOSI_GPIO_CLK_ENABLE();
     /* Enable SPI clock */
     SPIx_CLK_ENABLE(); 
     
-    /*##-2- Configure peripheral GPIO ##########################################*/  
+    /*##-2- Configure peripheral GPIO ##########################################*/ 
+    /* SPI CS GPIO pin configuration  */	
+		GPIO_InitStruct.Pin       = SPIx_CS_PIN;    
+		GPIO_InitStruct.Mode      = GPIO_MODE_OUTPUT_PP;
+		GPIO_InitStruct.Pull      = GPIO_PULLUP;
+    GPIO_InitStruct.Speed     = GPIO_SPEED_FREQ_VERY_HIGH;    
+    HAL_GPIO_Init(SPIx_CS_GPIO_PORT, &GPIO_InitStruct);
+		
     /* SPI SCK GPIO pin configuration  */
     GPIO_InitStruct.Pin       = SPIx_SCK_PIN;
     GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;

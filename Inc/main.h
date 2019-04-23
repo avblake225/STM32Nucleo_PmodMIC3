@@ -48,6 +48,7 @@
 #define SPIx                             SPI1
 #define SPIx_CLK_ENABLE()                __HAL_RCC_SPI1_CLK_ENABLE()
 #define SPIx_SCK_GPIO_CLK_ENABLE()       __HAL_RCC_GPIOA_CLK_ENABLE()
+#define SPIx_CS_GPIO_CLK_ENABLE()				 __HAL_RCC_GPIOE_CLK_ENABLE()
 #define SPIx_MISO_GPIO_CLK_ENABLE()      __HAL_RCC_GPIOA_CLK_ENABLE()
 #define SPIx_MOSI_GPIO_CLK_ENABLE()      __HAL_RCC_GPIOA_CLK_ENABLE()
 
@@ -55,6 +56,8 @@
 #define SPIx_RELEASE_RESET()             __HAL_RCC_SPI1_RELEASE_RESET()
 
 /* Definition for SPIx Pins */
+#define SPIx_CS_PIN											 GPIO_PIN_9
+#define SPIx_CS_GPIO_PORT							   GPIOE
 #define SPIx_SCK_PIN                     GPIO_PIN_5
 #define SPIx_SCK_GPIO_PORT               GPIOA
 #define SPIx_SCK_AF                      GPIO_AF5_SPI1

@@ -38,6 +38,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "stm32f4xx_hal_gpio.h"
 
 /** @addtogroup STM32F4xx_HAL_Examples
   * @{
@@ -50,9 +51,6 @@
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
-/* Uncomment this line to use the board as master, if not it is used as slave */
-#define MASTER_BOARD
-#define MIC_TEST
 
 /* Private variables ---------------------------------------------------------*/
 /* SPI handler declaration */
@@ -62,11 +60,8 @@ HAL_StatusTypeDef status;
 /* USART handler declaration */
 USART_HandleTypeDef UsartHandle;
 
-/* Buffer used for transmission */
-uint8_t aTxBuffer[] = "****SPI - Two Boards communication based on Polling **** SPI Message ******** SPI Message ******** SPI Message ****";
-
-/* Buffer used for reception */
-uint8_t aRxBuffer[BUFFERSIZE];
+/* Buffer used for transmission/reception */
+uint8_t spiDataBuff[2] = {0x00,0x00};
 
 /* Private function prototypes -----------------------------------------------*/
 static void SystemClock_Config(void);
@@ -102,7 +97,7 @@ int main(void)
   /* Configure LED1, LED2 and LED3 */
   BSP_LED_Init(LED1);
   BSP_LED_Init(LED2);
-  BSP_LED_Init(LED3);
+  BSP_LED_Init(LED3);	
 
   /*##-1- Configure the SPI peripheral #######################################*/
   /* Set the SPI parameters */
@@ -117,18 +112,16 @@ int main(void)
   SpiHandle.Init.CRCCalculation    = SPI_CRCCALCULATION_DISABLE;
   SpiHandle.Init.CRCPolynomial     = 7;
   SpiHandle.Init.NSS               = SPI_NSS_SOFT;
-
-#ifdef MASTER_BOARD
   SpiHandle.Init.Mode = SPI_MODE_MASTER;
-#else
-  SpiHandle.Init.Mode = SPI_MODE_SLAVE;
-#endif /* MASTER_BOARD */
 
   if(HAL_SPI_Init(&SpiHandle) != HAL_OK)
   {
     /* Initialization Error */
     Error_Handler();
-  }
+  }		
+	
+	// Initially disable PmodMIC3 by bringing CS line HIGH
+	HAL_GPIO_WritePin(SPIx_CS_GPIO_PORT, SPIx_CS_PIN, GPIO_PIN_SET);	
 	
 	/*##-- Configure the USART peripheral #######################################*/
   /* Set the USART parameters */
@@ -145,65 +138,31 @@ int main(void)
     Error_Handler();
   }
 
-#ifdef MASTER_BOARD
+#ifdef PUSH_BUTTON
 
   /* Configure User push-button button */
   BSP_PB_Init(BUTTON_USER,BUTTON_MODE_GPIO);
 
   /* Wait for User push-button press before starting the Communication */
   while (BSP_PB_GetState(BUTTON_USER) != GPIO_PIN_SET)
-  {
+  {				
     BSP_LED_Toggle(LED1);
-    HAL_Delay(100);
+    HAL_Delay(1000);
   }
-  BSP_LED_Off(LED1);
-#endif /* MASTER_BOARD */
-
-  /*##-2- Start the Full Duplex Communication process ########################*/  
-  /* While the SPI in TransmitReceive process, user can transmit data through 
-     "aTxBuffer" buffer & receive data through "aRxBuffer" */
-  /* Timeout is set to 5S */  	
+  BSP_LED_Off(LED1);	  
 	
-#ifdef SPI_TEST	
-  switch(HAL_SPI_TransmitReceive(&SpiHandle, (uint8_t*)aTxBuffer, (uint8_t *)aRxBuffer, BUFFERSIZE, 5000))	  
-    {
-      case HAL_OK:
-      /* Communication is completed ___________________________________________ */
-      /* Compare the sent and received buffers */
-      if (Buffercmp((uint8_t *)aTxBuffer, (uint8_t *)aRxBuffer, BUFFERSIZE))
-      {
-        /* Transfer error in transmission process */
-        Error_Handler();
-      }
-        /* Turn LED1 on: Transfer in transmission process is correct */
-        BSP_LED_On(LED1);
-        /* Turn LED2 on: Transfer in reception process is correct */
-        BSP_LED_On(LED2);
-        break;
-
-      case HAL_TIMEOUT:
-      /* A Timeout Occur ______________________________________________________*/
-      /* Call Timeout Handler */
-        Timeout_Error_Handler();
-        break;
-      /* An Error Occur ______________________________________________________ */
-      case HAL_ERROR:
-      /* Call Timeout Handler */
-        Error_Handler();
-        break;
-      default:
-        break;  
-     }
 #endif
-		 
+
   /* Infinite loop */
   while (1)
-  {
-		#ifdef MIC_TEST
-		   status = HAL_SPI_Receive(&SpiHandle, (uint8_t *)aRxBuffer, BUFFERSIZE, 5000);	
-
-       HAL_Delay(1000);
-    #endif						
+  {		
+		// Enable PmodMIC3 by bringing CS line LOW
+		HAL_GPIO_WritePin(SPIx_CS_GPIO_PORT, SPIx_CS_PIN, GPIO_PIN_RESET);		
+				
+		HAL_SPI_TransmitReceive(&SpiHandle, &spiDataBuff[0], &spiDataBuff[0], 2, 10);					
+		
+		// Disable PmodMIC3 by bringing CS line HIGH
+		HAL_GPIO_WritePin(SPIx_CS_GPIO_PORT, SPIx_CS_PIN, GPIO_PIN_SET);				    								
   }
 }
 
