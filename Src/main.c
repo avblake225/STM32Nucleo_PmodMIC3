@@ -57,8 +57,9 @@
 SPI_HandleTypeDef SpiHandle;
 HAL_StatusTypeDef status;
 
-/* USART handler declaration */
-USART_HandleTypeDef UsartHandle;
+/* UART handler declaration */
+UART_HandleTypeDef UartHandle;
+int ch = 'T';
 
 /* Buffer used for transmission/reception */
 uint8_t spiDataBuff[2] = {0x00,0x00};
@@ -123,16 +124,25 @@ int main(void)
 	// Initially disable PmodMIC3 by bringing CS line HIGH
 	HAL_GPIO_WritePin(SPIx_CS_GPIO_PORT, SPIx_CS_PIN, GPIO_PIN_SET);	
 	
-	/*##-- Configure the USART peripheral #######################################*/
-  /* Set the USART parameters */
-	UsartHandle.Instance = USARTx;
-	UsartHandle.Init.BaudRate = 115200;
-	UsartHandle.Init.WordLength = USART_WORDLENGTH_8B;
-	UsartHandle.Init.StopBits = USART_STOPBITS_1;
-	UsartHandle.Init.Parity = USART_PARITY_ODD;
-	UsartHandle.Init.Mode = USART_MODE_TX_RX;
+	/*##-1- Configure the UART peripheral ######################################*/
+  /* Put the USART peripheral in the Asynchronous mode (UART Mode) */
+  /* UART configured as follows:
+      - Word Length = 8 Bits (7 data bit + 1 parity bit) : 
+	                  BE CAREFUL : Program 7 data bits + 1 parity bit in PC HyperTerminal
+      - Stop Bit    = One Stop bit
+      - Parity      = ODD parity
+      - BaudRate    = 9600 baud
+      - Hardware flow control disabled (RTS and CTS signals) */
+	UartHandle.Instance = USARTx;
+	UartHandle.Init.BaudRate = 9600;
+	UartHandle.Init.WordLength = UART_WORDLENGTH_8B;
+	UartHandle.Init.StopBits = UART_STOPBITS_1;
+	UartHandle.Init.Parity = UART_PARITY_ODD;	
+	UartHandle.Init.HwFlowCtl  = UART_HWCONTROL_NONE;
+	UartHandle.Init.Mode = UART_MODE_TX_RX;
+	UartHandle.Init.OverSampling = UART_OVERSAMPLING_16;
 	
-	if(HAL_USART_Init(&UsartHandle) != HAL_OK)
+	if(HAL_UART_Init(&UartHandle) != HAL_OK)
   {
     /* Initialization Error */
     Error_Handler();
@@ -157,12 +167,18 @@ int main(void)
   while (1)
   {		
 		// Enable PmodMIC3 by bringing CS line LOW
-		HAL_GPIO_WritePin(SPIx_CS_GPIO_PORT, SPIx_CS_PIN, GPIO_PIN_RESET);		
+		//HAL_GPIO_WritePin(SPIx_CS_GPIO_PORT, SPIx_CS_PIN, GPIO_PIN_RESET);		
 				
-		HAL_SPI_TransmitReceive(&SpiHandle, &spiDataBuff[0], &spiDataBuff[0], 2, 10);					
+		// Get data
+		//HAL_SPI_TransmitReceive(&SpiHandle, &spiDataBuff[0], &spiDataBuff[0], 2, 10);									
 		
 		// Disable PmodMIC3 by bringing CS line HIGH
-		HAL_GPIO_WritePin(SPIx_CS_GPIO_PORT, SPIx_CS_PIN, GPIO_PIN_SET);				    								
+		//HAL_GPIO_WritePin(SPIx_CS_GPIO_PORT, SPIx_CS_PIN, GPIO_PIN_SET);	
+
+    // Print received data in serial terminal
+		HAL_UART_Transmit(&UartHandle, (uint8_t *)&ch, 1, 0xFFFF);
+		//status = HAL_UART_Transmit(&UartHandle, &spiDataBuff[0], 2, 10);
+		//printf("\r\n");		
   }
 }
 

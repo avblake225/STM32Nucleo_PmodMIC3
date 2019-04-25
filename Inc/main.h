@@ -39,6 +39,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_nucleo_144.h"
+#include "stdio.h"
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
@@ -77,8 +78,10 @@
 /* Definition for USARTx Pins */
 #define USARTx_TX_PIN										 GPIO_PIN_5
 #define USARTx_TX_GPIO_PORT							 GPIOD
+#define USARTx_TX_AF                     GPIO_AF7_USART2
 #define USARTx_RX_PIN										 GPIO_PIN_6
 #define USARTx_RX_GPIO_PORT							 GPIOD
+#define USARTx_RX_AF                     GPIO_AF7_USART2
 
 /* Size of buffer */
 #define BUFFERSIZE                       (COUNTOF(aTxBuffer) - 1)
