@@ -50,6 +50,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
+#define xxxUART_TEST
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
@@ -59,12 +60,21 @@ HAL_StatusTypeDef status;
 
 /* UART handler declaration */
 UART_HandleTypeDef UartHandle;
-int ch = 'T';
+#ifdef UART_TEST
+  int ch = 'T';
+#endif
 
 /* Buffer used for transmission/reception */
 uint8_t spiDataBuff[2] = {0x00,0x00};
 
 /* Private function prototypes -----------------------------------------------*/
+#ifdef __GNUC__
+/* With GCC, small printf (option LD Linker->Libraries->Small printf
+   set to 'Yes') calls __io_putchar() */
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#else
+#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#endif /* __GNUC__ */
 static void SystemClock_Config(void);
 static void Error_Handler(void);
 static void Timeout_Error_Handler(void);
@@ -167,18 +177,22 @@ int main(void)
   while (1)
   {		
 		// Enable PmodMIC3 by bringing CS line LOW
-		//HAL_GPIO_WritePin(SPIx_CS_GPIO_PORT, SPIx_CS_PIN, GPIO_PIN_RESET);		
+	  HAL_GPIO_WritePin(SPIx_CS_GPIO_PORT, SPIx_CS_PIN, GPIO_PIN_RESET);		
 				
 		// Get data
-		//HAL_SPI_TransmitReceive(&SpiHandle, &spiDataBuff[0], &spiDataBuff[0], 2, 10);									
+		HAL_SPI_TransmitReceive(&SpiHandle, &spiDataBuff[0], &spiDataBuff[0], 2, 10);									
 		
 		// Disable PmodMIC3 by bringing CS line HIGH
-		//HAL_GPIO_WritePin(SPIx_CS_GPIO_PORT, SPIx_CS_PIN, GPIO_PIN_SET);	
+		HAL_GPIO_WritePin(SPIx_CS_GPIO_PORT, SPIx_CS_PIN, GPIO_PIN_SET);	
 
     // Print received data in serial terminal
-		HAL_UART_Transmit(&UartHandle, (uint8_t *)&ch, 1, 0xFFFF);
-		//status = HAL_UART_Transmit(&UartHandle, &spiDataBuff[0], 2, 10);
-		//printf("\r\n");		
+		#ifdef UART_TEST
+		  HAL_UART_Transmit(&UartHandle, (uint8_t *)&ch, 1, 0xFFFF);
+		#else
+		  status = HAL_UART_Transmit(&UartHandle, &spiDataBuff[0], 2, 10);		  
+		  printf("\r\n");		
+		  HAL_Delay(100);
+		#endif
   }
 }
 
@@ -211,6 +225,20 @@ static void Timeout_Error_Handler(void)
     BSP_LED_Off(LED3);
     HAL_Delay(500);
   }
+}
+
+/**
+  * @brief  Retargets the C library printf function to the USART.
+  * @param  None
+  * @retval None
+  */
+PUTCHAR_PROTOTYPE
+{
+  /* Place your implementation of fputc here */
+  /* e.g. write a character to the USART3 and Loop until the end of transmission */
+  HAL_UART_Transmit(&UartHandle, (uint8_t *)&ch, 1, 0xFFFF);
+
+  return ch;
 }
 
 /**
