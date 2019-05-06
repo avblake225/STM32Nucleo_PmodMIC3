@@ -189,7 +189,9 @@ int main(void)
 		#ifdef UART_TEST
 		  HAL_UART_Transmit(&UartHandle, (uint8_t *)&ch, 1, 0xFFFF);
 		#else
-		  status = HAL_UART_Transmit(&UartHandle, &spiDataBuff[0], 2, 10);		  
+		  //status = HAL_UART_Transmit(&UartHandle, &spiDataBuff[0], 2, 10);		
+      printf("%d", spiDataBuff[0]);	
+      printf("%d", spiDataBuff[1]);		
 		  printf("\r\n");		
 		  HAL_Delay(100);
 		#endif
