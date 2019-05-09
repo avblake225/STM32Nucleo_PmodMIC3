@@ -173,6 +173,16 @@ void SysTick_Handler(void)
 }*/
 
 /**
+  * @brief  This function handles external line 15_10 interrupt request.
+  * @param  None
+  * @retval None
+  */
+void EXTI15_10_IRQHandler(void)
+{
+  HAL_GPIO_EXTI_IRQHandler(USER_BUTTON_PIN);
+}
+
+/**
   * @}
   */ 
 
