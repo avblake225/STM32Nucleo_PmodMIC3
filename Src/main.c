@@ -66,6 +66,7 @@ UART_HandleTypeDef UartHandle;
 
 /* Buffer used for transmission/reception */
 uint8_t spiDataBuff[2] = {0x00,0x00};
+uint16_t pmodMIC3_data_word = 0x00;
 
 /* Private function prototypes -----------------------------------------------*/
 #ifdef __GNUC__
@@ -184,7 +185,10 @@ int main(void)
 	  HAL_GPIO_WritePin(SPIx_CS_GPIO_PORT, SPIx_CS_PIN, GPIO_PIN_RESET);		
 				
 		// Get data
-		HAL_SPI_TransmitReceive(&SpiHandle, &spiDataBuff[0], &spiDataBuff[0], 2, 10);									
+		HAL_SPI_TransmitReceive(&SpiHandle, &spiDataBuff[0], &spiDataBuff[0], 2, 10);
+
+    // Format data
+    pmodMIC3_data_word = spiDataBuff[1] | (spiDataBuff[0] << 8);		
 		
 		// Disable PmodMIC3 by bringing CS line HIGH
 		HAL_GPIO_WritePin(SPIx_CS_GPIO_PORT, SPIx_CS_PIN, GPIO_PIN_SET);	
@@ -194,8 +198,9 @@ int main(void)
 		  HAL_UART_Transmit(&UartHandle, (uint8_t *)&ch, 1, 0xFFFF);
 		#else
 		  //status = HAL_UART_Transmit(&UartHandle, &spiDataBuff[0], 2, 10);		
-      printf("%d", spiDataBuff[0]);	
-      printf("%d", spiDataBuff[1]);		
+      //printf("%d", spiDataBuff[0]);	
+      //printf("%d", spiDataBuff[1]);		
+		  printf("%16d", pmodMIC3_data_word);
 		  printf("\r\n");		
 		  HAL_Delay(100);
 		#endif
