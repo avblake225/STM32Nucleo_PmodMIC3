@@ -3516,9 +3516,9 @@
       <ActiveTab>0</ActiveTab>
       <Doc>
         <Name>../Src/main.c</Name>
-        <ColumnNumber>41</ColumnNumber>
+        <ColumnNumber>56</ColumnNumber>
         <TopLine>177</TopLine>
-        <CurrentLine>203</CurrentLine>
+        <CurrentLine>189</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>
@@ -3526,8 +3526,8 @@
       <Doc>
         <Name>../../../../../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c</Name>
         <ColumnNumber>0</ColumnNumber>
-        <TopLine>446</TopLine>
-        <CurrentLine>447</CurrentLine>
+        <TopLine>607</TopLine>
+        <CurrentLine>617</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>
@@ -3552,9 +3552,9 @@
       </Doc>
       <Doc>
         <Name>../../../../../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h</Name>
-        <ColumnNumber>34</ColumnNumber>
+        <ColumnNumber>27</ColumnNumber>
         <TopLine>419</TopLine>
-        <CurrentLine>439</CurrentLine>
+        <CurrentLine>440</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>
