@@ -31,3 +31,4 @@ stm32f413zh_nucleo\main.o: ../../../../../../Drivers/STM32F4xx_HAL_Driver/Inc/st
 stm32f413zh_nucleo\main.o: ../../../../../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 stm32f413zh_nucleo\main.o: ../../../../../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 stm32f413zh_nucleo\main.o: ../../../../../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_usart.h
+stm32f413zh_nucleo\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h

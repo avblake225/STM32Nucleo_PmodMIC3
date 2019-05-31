@@ -38,6 +38,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include <stdbool.h>
 #include "stm32f4xx_hal_gpio.h"
 
 /** @addtogroup STM32F4xx_HAL_Examples
@@ -50,10 +51,15 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
-#define xxxUART_TEST
+#define UART_TEST
+#define xxxPMODMIC3_CONNECTED
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
+uint32_t time_elapsed = 0;
+bool record = false;
+uint32_t recording_duration = 5000;	// 5 sec
+
 /* SPI handler declaration */
 SPI_HandleTypeDef SpiHandle;
 HAL_StatusTypeDef status;
@@ -181,30 +187,46 @@ int main(void)
   /* Infinite loop */
   while (1)
   {		
-		// Enable PmodMIC3 by bringing CS line LOW
-	  HAL_GPIO_WritePin(SPIx_CS_GPIO_PORT, SPIx_CS_PIN, GPIO_PIN_RESET);		
+		if(record)
+		{			
+			time_elapsed++;
+			
+			if(time_elapsed > recording_duration)
+			{
+				record = false;
 				
-		// Get data
-		//HAL_SPI_TransmitReceive(&SpiHandle, &spiDataBuff[0], &spiDataBuff[0], 2, 10);
-		HAL_SPI_Receive(&SpiHandle, &spiDataBuff[0], 2, 10);
+				time_elapsed = 0;
+			}
+			
+			#ifdef PMODMIC3_CONNECTED
+			{
+				// Enable PmodMIC3 by bringing CS line LOW
+				HAL_GPIO_WritePin(SPIx_CS_GPIO_PORT, SPIx_CS_PIN, GPIO_PIN_RESET);		
+				
+				// Get data
+				//HAL_SPI_TransmitReceive(&SpiHandle, &spiDataBuff[0], &spiDataBuff[0], 2, 10);
+				HAL_SPI_Receive(&SpiHandle, &spiDataBuff[0], 2, 10);
 
-    // Format data
-    pmodMIC3_data_word = spiDataBuff[1] | (spiDataBuff[0] << 8);		
+				// Format data
+				pmodMIC3_data_word = spiDataBuff[1] | (spiDataBuff[0] << 8);		
 		
-		// Disable PmodMIC3 by bringing CS line HIGH
-		HAL_GPIO_WritePin(SPIx_CS_GPIO_PORT, SPIx_CS_PIN, GPIO_PIN_SET);	
+				// Disable PmodMIC3 by bringing CS line HIGH
+				HAL_GPIO_WritePin(SPIx_CS_GPIO_PORT, SPIx_CS_PIN, GPIO_PIN_SET);
+			}
+			#endif	
 
-    // Print received data in serial terminal
-		#ifdef UART_TEST
-		  HAL_UART_Transmit(&UartHandle, (uint8_t *)&ch, 1, 0xFFFF);
-		#else
-		  //status = HAL_UART_Transmit(&UartHandle, &spiDataBuff[0], 2, 10);		
-      //printf("%d", spiDataBuff[0]);	
-      //printf("%d", spiDataBuff[1]);		
-		  printf("%16d", pmodMIC3_data_word);
-		  printf("\r\n");		
-		  HAL_Delay(100);
-		#endif
+			// Print received data in serial terminal
+			#ifdef UART_TEST
+				HAL_UART_Transmit(&UartHandle, (uint8_t *)&ch, 1, 0xFFFF);
+			#else
+				//status = HAL_UART_Transmit(&UartHandle, &spiDataBuff[0], 2, 10);		
+				//printf("%d", spiDataBuff[0]);	
+				//printf("%d", spiDataBuff[1]);		
+				printf("%16d", pmodMIC3_data_word);
+				printf("\r\n");		
+				HAL_Delay(100);
+			#endif
+		}    
   }
 }
 
@@ -239,10 +261,15 @@ static void EXTI15_10_IRQHandler_Config(void)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {		
 	
-  if (GPIO_Pin == GPIO_PIN_13)
-  {
-    printf("User button pressed");
-  }
+	#ifdef UART_TEST
+    if (GPIO_Pin == GPIO_PIN_13)
+    {
+      printf("User button pressed");
+    }
+	#endif		
+	
+	// Start recording
+	record = true;
 }
 
 /**
