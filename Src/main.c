@@ -51,14 +51,15 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
-#define UART_TEST
-#define xxxPMODMIC3_CONNECTED
+#define xxxUART_TEST
+#define PMODMIC3_CONNECTED
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
 uint32_t time_elapsed = 0;
 bool record = false;
 uint32_t recording_duration = 5000;	// 5 sec
+uint32_t sampling_interval = 10; // 10 ms
 
 /* SPI handler declaration */
 SPI_HandleTypeDef SpiHandle;
@@ -186,10 +187,10 @@ int main(void)
 
   /* Infinite loop */
   while (1)
-  {		
+  {						
 		if(record)
 		{			
-			time_elapsed++;
+			time_elapsed += sampling_interval;
 			
 			if(time_elapsed > recording_duration)
 			{
@@ -203,11 +204,10 @@ int main(void)
 				// Enable PmodMIC3 by bringing CS line LOW
 				HAL_GPIO_WritePin(SPIx_CS_GPIO_PORT, SPIx_CS_PIN, GPIO_PIN_RESET);		
 				
-				// Get data
-				//HAL_SPI_TransmitReceive(&SpiHandle, &spiDataBuff[0], &spiDataBuff[0], 2, 10);
+				// Get data				
 				HAL_SPI_Receive(&SpiHandle, &spiDataBuff[0], 2, 10);
 
-				// Format data
+				// Format data (see PmodMIC3 reference manual)
 				pmodMIC3_data_word = spiDataBuff[1] | (spiDataBuff[0] << 8);		
 		
 				// Disable PmodMIC3 by bringing CS line HIGH
@@ -219,12 +219,11 @@ int main(void)
 			#ifdef UART_TEST
 				HAL_UART_Transmit(&UartHandle, (uint8_t *)&ch, 1, 0xFFFF);
 			#else
-				//status = HAL_UART_Transmit(&UartHandle, &spiDataBuff[0], 2, 10);		
-				//printf("%d", spiDataBuff[0]);	
-				//printf("%d", spiDataBuff[1]);		
-				printf("%16d", pmodMIC3_data_word);
-				printf("\r\n");		
-				HAL_Delay(100);
+			  #ifdef PMODMIC3_CONNECTED				
+				  printf("%16d", pmodMIC3_data_word);
+				  printf("\r\n");		
+				  HAL_Delay(sampling_interval);
+			  #endif
 			#endif
 		}    
   }
