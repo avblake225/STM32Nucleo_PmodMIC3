@@ -52,14 +52,13 @@
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 #define xxxUART_TEST
+#define xxxSW1_TEST
 #define PMODMIC3_CONNECTED
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
-uint32_t time_elapsed = 0;
-bool record = false;
-uint32_t recording_duration = 5000;	// 5 sec
 uint32_t sampling_interval = 10; // 10 ms
+GPIO_PinState SW1_state;
 
 /* SPI handler declaration */
 SPI_HandleTypeDef SpiHandle;
@@ -90,6 +89,7 @@ static uint16_t Buffercmp(uint8_t *pBuffer1, uint8_t *pBuffer2, uint16_t BufferL
 
 /* Private functions ---------------------------------------------------------*/
 static void EXTI15_10_IRQHandler_Config(void);
+static void SW1_config(void);
 
 /**
   * @brief  Main program.
@@ -121,6 +121,9 @@ int main(void)
 	
 	/* -2- Configure EXTI_Line15_10 (connected to PC.13 pin) in interrupt mode */
   EXTI15_10_IRQHandler_Config();
+	
+	// Configure slider switch (SW1)
+	SW1_config();
 
   /*##-1- Configure the SPI peripheral #######################################*/
   /* Set the SPI parameters */
@@ -187,18 +190,17 @@ int main(void)
 
   /* Infinite loop */
   while (1)
-  {						
-		if(record)
-		{			
-			time_elapsed += sampling_interval;
-			
-			if(time_elapsed > recording_duration)
-			{
-				record = false;
-				
-				time_elapsed = 0;
-			}
-			
+  {			
+		// Poll SW1 state
+    SW1_state = HAL_GPIO_ReadPin(GPIOF, GPIO_PIN_13);		
+		
+		#ifdef SW1_TEST
+		  printf("%d\r\n", SW1_state);
+		  HAL_Delay(10);
+		#endif
+		
+		if(SW1_state == 1)
+		{
 			#ifdef PMODMIC3_CONNECTED
 			{
 				// Enable PmodMIC3 by bringing CS line LOW
@@ -253,6 +255,23 @@ static void EXTI15_10_IRQHandler_Config(void)
 }
 
 /**
+  * @brief  Configure GPIO for slider switch (SW1)
+  * @param  None
+  * @retval None
+  */
+static void SW1_config(void)
+{
+  GPIO_InitTypeDef   GPIO_InitStructure;
+  
+  __HAL_RCC_GPIOF_CLK_ENABLE();
+  
+  GPIO_InitStructure.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStructure.Pull = GPIO_NOPULL;
+  GPIO_InitStructure.Pin = GPIO_PIN_13;
+  HAL_GPIO_Init(GPIOF, &GPIO_InitStructure);  
+}
+
+/**
   * @brief EXTI line detection callbacks
   * @param GPIO_Pin: Specifies the pins connected EXTI line
   * @retval None
@@ -265,10 +284,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     {
       printf("User button pressed");
     }
-	#endif		
-	
-	// Start recording
-	record = true;
+	#endif				
 }
 
 /**

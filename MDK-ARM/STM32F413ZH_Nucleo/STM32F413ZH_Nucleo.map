@@ -70,7 +70,6 @@ Section Cross References
     stm32f4xx_nucleo_144.o(i.SPIx_WriteReadData) refers to stm32f4xx_nucleo_144.o(.data) for .data
     stm32f4xx_nucleo_144.o(i.SPIx_WriteReadData) refers to stm32f4xx_nucleo_144.o(.bss) for .bss
     main.o(i.Error_Handler) refers to stm32f4xx_nucleo_144.o(i.BSP_LED_On) for BSP_LED_On
-    main.o(i.HAL_GPIO_EXTI_Callback) refers to main.o(.data) for .data
     main.o(i.SystemClock_Config) refers to stm32f4xx_hal_rcc_ex.o(i.HAL_RCC_OscConfig) for HAL_RCC_OscConfig
     main.o(i.SystemClock_Config) refers to stm32f4xx_hal_rcc.o(i.HAL_RCC_ClockConfig) for HAL_RCC_ClockConfig
     main.o(i.fputc) refers to stm32f4xx_hal_uart.o(i.HAL_UART_Transmit) for HAL_UART_Transmit
@@ -85,6 +84,7 @@ Section Cross References
     main.o(i.main) refers to stm32f4xx_hal_gpio.o(i.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
     main.o(i.main) refers to stm32f4xx_hal_uart.o(i.HAL_UART_Init) for HAL_UART_Init
     main.o(i.main) refers to main.o(i.Error_Handler) for Error_Handler
+    main.o(i.main) refers to stm32f4xx_hal_gpio.o(i.HAL_GPIO_ReadPin) for HAL_GPIO_ReadPin
     main.o(i.main) refers to stm32f4xx_hal_spi.o(i.HAL_SPI_Receive) for HAL_SPI_Receive
     main.o(i.main) refers to printf6.o(i.__0printf$6) for __2printf
     main.o(i.main) refers to stm32f4xx_hal.o(i.HAL_Delay) for HAL_Delay
@@ -942,7 +942,6 @@ Removing Unused input sections from the image.
     Removing stm32f4xx_hal_gpio.o(i.HAL_GPIO_DeInit), (308 bytes).
     Removing stm32f4xx_hal_gpio.o(i.HAL_GPIO_EXTI_Callback), (2 bytes).
     Removing stm32f4xx_hal_gpio.o(i.HAL_GPIO_LockPin), (34 bytes).
-    Removing stm32f4xx_hal_gpio.o(i.HAL_GPIO_ReadPin), (10 bytes).
     Removing stm32f4xx_hal_gpio.o(i.HAL_GPIO_TogglePin), (8 bytes).
     Removing stm32f4xx_hal_pwr_ex.o(.rev16_text), (4 bytes).
     Removing stm32f4xx_hal_pwr_ex.o(.revsh_text), (4 bytes).
@@ -1133,7 +1132,7 @@ Removing Unused input sections from the image.
     Removing cdrcmple.o(.text), (48 bytes).
     Removing depilogue.o(.text), (186 bytes).
 
-370 unused section(s) (total 31243 bytes) removed from the image.
+369 unused section(s) (total 31233 bytes) removed from the image.
 
 ==============================================================================
 
@@ -1157,35 +1156,35 @@ Image Symbol Table
     ../Src/stm32f4xx_hal_msp.c               0x00000000   Number         0  stm32f4xx_hal_msp.o ABSOLUTE
     ../Src/stm32f4xx_it.c                    0x00000000   Number         0  stm32f4xx_it.o ABSOLUTE
     ../Src/system_stm32f4xx.c                0x00000000   Number         0  system_stm32f4xx.o ABSOLUTE
-    ../clib/microlib/division.c              0x00000000   Number         0  uidiv.o ABSOLUTE
     ../clib/microlib/division.c              0x00000000   Number         0  uldiv.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
+    ../clib/microlib/division.c              0x00000000   Number         0  uidiv.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry5.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
+    ../clib/microlib/longlong.c              0x00000000   Number         0  llsshr.o ABSOLUTE
     ../clib/microlib/longlong.c              0x00000000   Number         0  llshl.o ABSOLUTE
     ../clib/microlib/longlong.c              0x00000000   Number         0  llushr.o ABSOLUTE
-    ../clib/microlib/longlong.c              0x00000000   Number         0  llsshr.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf4.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf5.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf6.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfa.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf7.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf8.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfa.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf4.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf3.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf2.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf8.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf1.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf6.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf0.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfb.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf2.o ABSOLUTE
     ../clib/microlib/printf/stubs.s          0x00000000   Number         0  stubs.o ABSOLUTE
     ../clib/microlib/stdio/streams.c         0x00000000   Number         0  stdout.o ABSOLUTE
     ../clib/microlib/stubs.s                 0x00000000   Number         0  iusefp.o ABSOLUTE
@@ -1244,9 +1243,10 @@ Image Symbol Table
     Error_Handler                            0x08000381   Thumb Code     8  main.o(i.Error_Handler)
     i.HAL_Delay                              0x08000388   Section        0  stm32f4xx_hal.o(i.HAL_Delay)
     i.HAL_GPIO_EXTI_Callback                 0x080003a4   Section        0  main.o(i.HAL_GPIO_EXTI_Callback)
-    i.HAL_GPIO_EXTI_IRQHandler               0x080003b0   Section        0  stm32f4xx_hal_gpio.o(i.HAL_GPIO_EXTI_IRQHandler)
-    i.HAL_GPIO_Init                          0x080003c8   Section        0  stm32f4xx_hal_gpio.o(i.HAL_GPIO_Init)
-    i.HAL_GPIO_WritePin                      0x0800056c   Section        0  stm32f4xx_hal_gpio.o(i.HAL_GPIO_WritePin)
+    i.HAL_GPIO_EXTI_IRQHandler               0x080003a8   Section        0  stm32f4xx_hal_gpio.o(i.HAL_GPIO_EXTI_IRQHandler)
+    i.HAL_GPIO_Init                          0x080003c0   Section        0  stm32f4xx_hal_gpio.o(i.HAL_GPIO_Init)
+    i.HAL_GPIO_ReadPin                       0x08000564   Section        0  stm32f4xx_hal_gpio.o(i.HAL_GPIO_ReadPin)
+    i.HAL_GPIO_WritePin                      0x0800056e   Section        0  stm32f4xx_hal_gpio.o(i.HAL_GPIO_WritePin)
     i.HAL_GetTick                            0x08000578   Section        0  stm32f4xx_hal.o(i.HAL_GetTick)
     i.HAL_IncTick                            0x08000584   Section        0  stm32f4xx_hal.o(i.HAL_IncTick)
     i.HAL_Init                               0x08000594   Section        0  stm32f4xx_hal.o(i.HAL_Init)
@@ -1300,16 +1300,16 @@ Image Symbol Table
     _printf_pre_padding                      0x08001abd   Thumb Code    46  printf6.o(i._printf_pre_padding)
     i.fputc                                  0x08001aec   Section        0  main.o(i.fputc)
     i.main                                   0x08001b04   Section        0  main.o(i.main)
-    .constdata                               0x08001c4c   Section       16  system_stm32f4xx.o(.constdata)
-    .constdata                               0x08001c5c   Section        8  system_stm32f4xx.o(.constdata)
-    .constdata                               0x08001c64   Section       10  stm32f4xx_nucleo_144.o(.constdata)
+    .constdata                               0x08001c64   Section       16  system_stm32f4xx.o(.constdata)
+    .constdata                               0x08001c74   Section        8  system_stm32f4xx.o(.constdata)
+    .constdata                               0x08001c7c   Section       10  stm32f4xx_nucleo_144.o(.constdata)
     .data                                    0x20000000   Section        4  system_stm32f4xx.o(.data)
     .data                                    0x20000004   Section       20  stm32f4xx_nucleo_144.o(.data)
-    .data                                    0x20000018   Section       20  main.o(.data)
-    .data                                    0x2000002c   Section        4  stm32f4xx_hal.o(.data)
-    .data                                    0x20000030   Section        4  stdout.o(.data)
-    .bss                                     0x20000034   Section      152  main.o(.bss)
-    STACK                                    0x200000d0   Section     1024  startup_stm32f413xx.o(STACK)
+    .data                                    0x20000018   Section       12  main.o(.data)
+    .data                                    0x20000024   Section        4  stm32f4xx_hal.o(.data)
+    .data                                    0x20000028   Section        4  stdout.o(.data)
+    .bss                                     0x2000002c   Section      152  main.o(.bss)
+    STACK                                    0x200000c8   Section     1024  startup_stm32f413xx.o(STACK)
 
     Global Symbols
 
@@ -1485,10 +1485,11 @@ Image Symbol Table
     DebugMon_Handler                         0x08000377   Thumb Code     2  stm32f4xx_it.o(i.DebugMon_Handler)
     EXTI15_10_IRQHandler                     0x08000379   Thumb Code     8  stm32f4xx_it.o(i.EXTI15_10_IRQHandler)
     HAL_Delay                                0x08000389   Thumb Code    28  stm32f4xx_hal.o(i.HAL_Delay)
-    HAL_GPIO_EXTI_Callback                   0x080003a5   Thumb Code     8  main.o(i.HAL_GPIO_EXTI_Callback)
-    HAL_GPIO_EXTI_IRQHandler                 0x080003b1   Thumb Code    18  stm32f4xx_hal_gpio.o(i.HAL_GPIO_EXTI_IRQHandler)
-    HAL_GPIO_Init                            0x080003c9   Thumb Code   378  stm32f4xx_hal_gpio.o(i.HAL_GPIO_Init)
-    HAL_GPIO_WritePin                        0x0800056d   Thumb Code    10  stm32f4xx_hal_gpio.o(i.HAL_GPIO_WritePin)
+    HAL_GPIO_EXTI_Callback                   0x080003a5   Thumb Code     2  main.o(i.HAL_GPIO_EXTI_Callback)
+    HAL_GPIO_EXTI_IRQHandler                 0x080003a9   Thumb Code    18  stm32f4xx_hal_gpio.o(i.HAL_GPIO_EXTI_IRQHandler)
+    HAL_GPIO_Init                            0x080003c1   Thumb Code   378  stm32f4xx_hal_gpio.o(i.HAL_GPIO_Init)
+    HAL_GPIO_ReadPin                         0x08000565   Thumb Code    10  stm32f4xx_hal_gpio.o(i.HAL_GPIO_ReadPin)
+    HAL_GPIO_WritePin                        0x0800056f   Thumb Code    10  stm32f4xx_hal_gpio.o(i.HAL_GPIO_WritePin)
     HAL_GetTick                              0x08000579   Thumb Code     6  stm32f4xx_hal.o(i.HAL_GetTick)
     HAL_IncTick                              0x08000585   Thumb Code    10  stm32f4xx_hal.o(i.HAL_IncTick)
     HAL_Init                                 0x08000595   Thumb Code    48  stm32f4xx_hal.o(i.HAL_Init)
@@ -1525,29 +1526,27 @@ Image Symbol Table
     __scatterload_null                       0x08001797   Thumb Code     2  handlers.o(i.__scatterload_null)
     __scatterload_zeroinit                   0x08001799   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
     fputc                                    0x08001aed   Thumb Code    20  main.o(i.fputc)
-    main                                     0x08001b05   Thumb Code   282  main.o(i.main)
-    AHBPrescTable                            0x08001c4c   Data          16  system_stm32f4xx.o(.constdata)
-    APBPrescTable                            0x08001c5c   Data           8  system_stm32f4xx.o(.constdata)
-    BUTTON_IRQn                              0x08001c64   Data           1  stm32f4xx_nucleo_144.o(.constdata)
-    BUTTON_PIN                               0x08001c66   Data           2  stm32f4xx_nucleo_144.o(.constdata)
-    GPIO_PIN                                 0x08001c68   Data           6  stm32f4xx_nucleo_144.o(.constdata)
-    Region$$Table$$Base                      0x08001c70   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x08001c90   Number         0  anon$$obj.o(Region$$Table)
+    main                                     0x08001b05   Thumb Code   302  main.o(i.main)
+    AHBPrescTable                            0x08001c64   Data          16  system_stm32f4xx.o(.constdata)
+    APBPrescTable                            0x08001c74   Data           8  system_stm32f4xx.o(.constdata)
+    BUTTON_IRQn                              0x08001c7c   Data           1  stm32f4xx_nucleo_144.o(.constdata)
+    BUTTON_PIN                               0x08001c7e   Data           2  stm32f4xx_nucleo_144.o(.constdata)
+    GPIO_PIN                                 0x08001c80   Data           6  stm32f4xx_nucleo_144.o(.constdata)
+    Region$$Table$$Base                      0x08001c88   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x08001ca8   Number         0  anon$$obj.o(Region$$Table)
     SystemCoreClock                          0x20000000   Data           4  system_stm32f4xx.o(.data)
     BUTTON_PORT                              0x20000004   Data           4  stm32f4xx_nucleo_144.o(.data)
     SpixTimeout                              0x20000008   Data           4  stm32f4xx_nucleo_144.o(.data)
     GPIO_PORT                                0x2000000c   Data          12  stm32f4xx_nucleo_144.o(.data)
-    record                                   0x20000018   Data           1  main.o(.data)
+    SW1_state                                0x20000018   Data           1  main.o(.data)
     spiDataBuff                              0x20000019   Data           2  main.o(.data)
     pmodMIC3_data_word                       0x2000001c   Data           2  main.o(.data)
-    time_elapsed                             0x20000020   Data           4  main.o(.data)
-    recording_duration                       0x20000024   Data           4  main.o(.data)
-    sampling_interval                        0x20000028   Data           4  main.o(.data)
-    uwTick                                   0x2000002c   Data           4  stm32f4xx_hal.o(.data)
-    __stdout                                 0x20000030   Data           4  stdout.o(.data)
-    SpiHandle                                0x20000034   Data          88  main.o(.bss)
-    UartHandle                               0x2000008c   Data          64  main.o(.bss)
-    __initial_sp                             0x200004d0   Data           0  startup_stm32f413xx.o(STACK)
+    sampling_interval                        0x20000020   Data           4  main.o(.data)
+    uwTick                                   0x20000024   Data           4  stm32f4xx_hal.o(.data)
+    __stdout                                 0x20000028   Data           4  stdout.o(.data)
+    SpiHandle                                0x2000002c   Data          88  main.o(.bss)
+    UartHandle                               0x20000084   Data          64  main.o(.bss)
+    __initial_sp                             0x200004c8   Data           0  startup_stm32f413xx.o(STACK)
 
 
 
@@ -1557,9 +1556,9 @@ Memory Map of the image
 
   Image Entry point : 0x080001d9
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00001cc4, Max: 0x00180000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00001cd4, Max: 0x00180000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x00001c90, Max: 0x00180000, ABSOLUTE)
+    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x00001ca8, Max: 0x00180000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -1586,11 +1585,12 @@ Memory Map of the image
     0x08000378   0x08000378   0x00000008   Code   RO          389    i.EXTI15_10_IRQHandler  stm32f4xx_it.o
     0x08000380   0x08000380   0x00000008   Code   RO          294    i.Error_Handler     main.o
     0x08000388   0x08000388   0x0000001c   Code   RO          588    i.HAL_Delay         stm32f4xx_hal.o
-    0x080003a4   0x080003a4   0x0000000c   Code   RO          295    i.HAL_GPIO_EXTI_Callback  main.o
-    0x080003b0   0x080003b0   0x00000018   Code   RO         1370    i.HAL_GPIO_EXTI_IRQHandler  stm32f4xx_hal_gpio.o
-    0x080003c8   0x080003c8   0x000001a4   Code   RO         1371    i.HAL_GPIO_Init     stm32f4xx_hal_gpio.o
-    0x0800056c   0x0800056c   0x0000000a   Code   RO         1375    i.HAL_GPIO_WritePin  stm32f4xx_hal_gpio.o
-    0x08000576   0x08000576   0x00000002   PAD
+    0x080003a4   0x080003a4   0x00000002   Code   RO          295    i.HAL_GPIO_EXTI_Callback  main.o
+    0x080003a6   0x080003a6   0x00000002   PAD
+    0x080003a8   0x080003a8   0x00000018   Code   RO         1370    i.HAL_GPIO_EXTI_IRQHandler  stm32f4xx_hal_gpio.o
+    0x080003c0   0x080003c0   0x000001a4   Code   RO         1371    i.HAL_GPIO_Init     stm32f4xx_hal_gpio.o
+    0x08000564   0x08000564   0x0000000a   Code   RO         1373    i.HAL_GPIO_ReadPin  stm32f4xx_hal_gpio.o
+    0x0800056e   0x0800056e   0x0000000a   Code   RO         1375    i.HAL_GPIO_WritePin  stm32f4xx_hal_gpio.o
     0x08000578   0x08000578   0x0000000c   Code   RO          594    i.HAL_GetTick       stm32f4xx_hal.o
     0x08000584   0x08000584   0x00000010   Code   RO          596    i.HAL_IncTick       stm32f4xx_hal.o
     0x08000594   0x08000594   0x00000034   Code   RO          597    i.HAL_Init          stm32f4xx_hal.o
@@ -1639,26 +1639,26 @@ Memory Map of the image
     0x08001abc   0x08001abc   0x0000002e   Code   RO         2663    i._printf_pre_padding  mc_w.l(printf6.o)
     0x08001aea   0x08001aea   0x00000002   PAD
     0x08001aec   0x08001aec   0x00000018   Code   RO          297    i.fputc             main.o
-    0x08001b04   0x08001b04   0x00000148   Code   RO          298    i.main              main.o
-    0x08001c4c   0x08001c4c   0x00000010   Data   RO            6    .constdata          system_stm32f4xx.o
-    0x08001c5c   0x08001c5c   0x00000008   Data   RO            7    .constdata          system_stm32f4xx.o
-    0x08001c64   0x08001c64   0x0000000a   Data   RO          155    .constdata          stm32f4xx_nucleo_144.o
-    0x08001c6e   0x08001c6e   0x00000002   PAD
-    0x08001c70   0x08001c70   0x00000020   Data   RO         2798    Region$$Table       anon$$obj.o
+    0x08001b04   0x08001b04   0x00000160   Code   RO          298    i.main              main.o
+    0x08001c64   0x08001c64   0x00000010   Data   RO            6    .constdata          system_stm32f4xx.o
+    0x08001c74   0x08001c74   0x00000008   Data   RO            7    .constdata          system_stm32f4xx.o
+    0x08001c7c   0x08001c7c   0x0000000a   Data   RO          155    .constdata          stm32f4xx_nucleo_144.o
+    0x08001c86   0x08001c86   0x00000002   PAD
+    0x08001c88   0x08001c88   0x00000020   Data   RO         2798    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08001c90, Size: 0x000004d0, Max: 0x00050000, ABSOLUTE)
+    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08001ca8, Size: 0x000004c8, Max: 0x00050000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x08001c90   0x00000004   Data   RW            8    .data               system_stm32f4xx.o
-    0x20000004   0x08001c94   0x00000014   Data   RW          156    .data               stm32f4xx_nucleo_144.o
-    0x20000018   0x08001ca8   0x00000014   Data   RW          300    .data               main.o
-    0x2000002c   0x08001cbc   0x00000004   Data   RW          603    .data               stm32f4xx_hal.o
-    0x20000030   0x08001cc0   0x00000004   Data   RW         2774    .data               mc_w.l(stdout.o)
-    0x20000034        -       0x00000098   Zero   RW          299    .bss                main.o
-    0x200000cc   0x08001cc4   0x00000004   PAD
-    0x200000d0        -       0x00000400   Zero   RW          465    STACK               startup_stm32f413xx.o
+    0x20000000   0x08001ca8   0x00000004   Data   RW            8    .data               system_stm32f4xx.o
+    0x20000004   0x08001cac   0x00000014   Data   RW          156    .data               stm32f4xx_nucleo_144.o
+    0x20000018   0x08001cc0   0x0000000c   Data   RW          300    .data               main.o
+    0x20000024   0x08001ccc   0x00000004   Data   RW          603    .data               stm32f4xx_hal.o
+    0x20000028   0x08001cd0   0x00000004   Data   RW         2774    .data               mc_w.l(stdout.o)
+    0x2000002c        -       0x00000098   Zero   RW          299    .bss                main.o
+    0x200000c4   0x08001cd4   0x00000004   PAD
+    0x200000c8        -       0x00000400   Zero   RW          465    STACK               startup_stm32f413xx.o
 
 
 ==============================================================================
@@ -1668,11 +1668,11 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-       500         62          0         20        152       4710   main.o
+       514         62          0         12        152       4741   main.o
         36          8        472          0       1024        896   startup_stm32f413xx.o
        150         22          0          4          0       5865   stm32f4xx_hal.o
        198         14          0          0          0      34159   stm32f4xx_hal_cortex.o
-       454         48          0          0          0       3543   stm32f4xx_hal_gpio.o
+       464         48          0          0          0       4326   stm32f4xx_hal_gpio.o
        312         26          0          0          0       2121   stm32f4xx_hal_msp.o
        464         50          0          0          0       4312   stm32f4xx_hal_rcc.o
        752         22          0          0          0       2012   stm32f4xx_hal_rcc_ex.o
@@ -1683,7 +1683,7 @@ Image component sizes
         84         18         24          4          0     652927   system_stm32f4xx.o
 
     ----------------------------------------------------------------------
-      5612        302        540         48       1180     735963   Object Totals
+      5636        302        540         40       1180     736777   Object Totals
          0          0         32          0          0          0   (incl. Generated)
          8          0          2          0          4          0   (incl. Padding)
 
@@ -1728,15 +1728,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      6772        332        540         52       1180     732383   Grand Totals
-      6772        332        540         52       1180     732383   ELF Image Totals
-      6772        332        540         52          0          0   ROM Totals
+      6796        332        540         44       1180     733197   Grand Totals
+      6796        332        540         44       1180     733197   ELF Image Totals
+      6796        332        540         44          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                 7312 (   7.14kB)
-    Total RW  Size (RW Data + ZI Data)              1232 (   1.20kB)
-    Total ROM Size (Code + RO Data + RW Data)       7364 (   7.19kB)
+    Total RO  Size (Code + RO Data)                 7336 (   7.16kB)
+    Total RW  Size (RW Data + ZI Data)              1224 (   1.20kB)
+    Total ROM Size (Code + RO Data + RW Data)       7380 (   7.21kB)
 
 ==============================================================================
 
